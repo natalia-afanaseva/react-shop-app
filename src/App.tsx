@@ -7,10 +7,12 @@ import MainPage from "./views/MainPage";
 import ProductPage from "./views/ProductPage";
 import Checkout from "./views/Checkout";
 import NotFound from "./views/NotFound";
+import CartOffcanvas from "./components/CartOffcanvas";
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
+      <CartOffcanvas />
       <Header />
       <main>
         <Routes>
