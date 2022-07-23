@@ -8,13 +8,16 @@ import {
   onSnapshot,
   DocumentData,
 } from "firebase/firestore";
+import Loader from "../components/Loader";
 
 const MainPage = (): JSX.Element => {
   const [products, setProducts] = useState<
     { id: string; data: DocumentData }[]
   >([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const q = query(collection(db, "products"));
     onSnapshot(q, (querySnapshot) => {
       setProducts(
@@ -23,6 +26,7 @@ const MainPage = (): JSX.Element => {
           data: doc.data(),
         }))
       );
+      setLoading(false);
     });
   }, []);
 
@@ -42,16 +46,22 @@ const MainPage = (): JSX.Element => {
         </hgroup>
       </section>
       <section className="row justify-content-center my-4">
-        {products.map((product) => (
-          <SingleProductCard
-            key={product.id}
-            imageMain={product.data.photo[0]}
-            imageFallback={product.data.photo[1]}
-            name={product.data.name}
-            price={product.data.price}
-            id={product.id}
-          />
-        ))}
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            {products.map((product) => (
+              <SingleProductCard
+                key={product.id}
+                imageMain={product.data.photo[0]}
+                imageFallback={product.data.photo[1]}
+                name={product.data.name}
+                price={product.data.price}
+                id={product.id}
+              />
+            ))}
+          </>
+        )}
       </section>
     </div>
   );

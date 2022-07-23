@@ -1,0 +1,49 @@
+@use "./../colors.scss" as colors;
+
+.carousel {
+  width: 50%;
+  height: 35rem;
+
+  .carousel-inner,
+  .carousel-item,
+  .carousel-item img {
+    height: 100%;
+  }
+
+  .carousel-item img {
+    object-fit: cover;
+  }
+}
+
+.carousel-control-next:hover,
+.carousel-control-prev:hover,
+.btn-close:hover {
+  background-color: transparent;
+}
+
+button.product-page__btn {
+  border: 1px solid colors.$black;
+  border-radius: 50%;
+  color: colors.$black;
+  background-color: colors.$white;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  font-size: 120%;
+  vertical-align: middle;
+
+  &:hover {
+    background-color: colors.$grey;
+  }
+
+  + span {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    border: 1px solid colors.$grey;
+    border-radius: 1.25rem;
+    font-size: 0.75rem;
+    height: 2.5rem;
+    padding: 0.625rem 3rem;
+    width: 100%;
+  }
+}

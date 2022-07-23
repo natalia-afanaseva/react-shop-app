@@ -1,0 +1,21 @@
+@use "./../colors.scss" as colors;
+
+.offcanvas-header {
+  border-bottom: 1px solid colors.$grey;
+}
+
+.offcanvas-footer {
+  button {
+    background-color: colors.$black;
+    color: colors.$white;
+    border: 1px solid colors.$white;
+  }
+}
+
+.cart {
+  img {
+    width: 100%;
+    object-fit: cover;
+    height: 10rem;
+  }
+}

@@ -11,8 +11,6 @@ const SingleProductCard: React.FC<{
 }> = ({ id, imageMain, imageFallback, price, effect, name }) => {
   const [toggleImage, setToggleImage] = useState(imageMain);
 
-  console.log(id);
-
   return (
     <div className="product-card col-12 col-md-6 col-lg-4 col-xl-3">
       <Link to={`/product/${id}`}>

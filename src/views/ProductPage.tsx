@@ -1,11 +1,17 @@
-import React, { memo, useState, useCallback } from "react";
+import React, { memo, useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProductPageCarousel from "../components/ProductPageCarousel";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../utils/firebaseConfig";
+import { SingleProduct } from "../types/SingleProduct";
+import Loader from "../components/Loader";
 
 const ProductPage: React.FC = (): JSX.Element => {
-  const params = useParams();
+  const { productId } = useParams();
 
   const [itemsNumber, setItemsNumber] = useState(1);
+  const [product, setProduct] = useState<SingleProduct | undefined>(undefined);
+  const [loading, setLoading] = useState(false);
 
   const handleMinus = useCallback(() => {
     setItemsNumber((prev) => {
@@ -18,41 +24,64 @@ const ProductPage: React.FC = (): JSX.Element => {
     setItemsNumber((prev) => prev + 1);
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    getDoc(doc(db, `products/${productId}`))
+      .then((result) => {
+        if (!result.exists) {
+          return;
+        }
+
+        const prod = {
+          id: result.id,
+          description: result.data()?.description,
+          effect: result.data()?.effect,
+          name: result.data()?.name,
+          photo: result.data()?.photo,
+          price: result.data()?.price,
+        };
+
+        setProduct(prod);
+      })
+      .finally(() => setLoading(false));
+  }, [productId]);
+
   return (
     <div className="row px-5 my-5">
-      <ProductPageCarousel />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <ProductPageCarousel />
 
-      <div className="col">
-        <h2>Name</h2>
-        <h5>Effect</h5>
+          <div className="col">
+            <h2>{product?.name}</h2>
+            <h5>{product?.effect}</h5>
 
-        <p className="mb-5">$23</p>
+            <p className="mb-5">${product?.price}</p>
 
-        <button onClick={handleMinus} className="product-page__btn">
-          -
-        </button>
-        <span>{itemsNumber}</span>
-        <button onClick={handlePlus} className="product-page__btn">
-          +
-        </button>
+            <button onClick={handleMinus} className="product-page__btn">
+              -
+            </button>
+            <span>{itemsNumber}</span>
+            <button onClick={handlePlus} className="product-page__btn">
+              +
+            </button>
 
-        <button
-          className="mt-5"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasRight"
-          aria-controls="offcanvasRight"
-        >
-          Add to cart
-        </button>
+            <button
+              className="mt-5"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasRight"
+              aria-controls="offcanvasRight"
+            >
+              Add to cart
+            </button>
 
-        <p className="mt-5">
-          description... Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit. Velit ratione aperiam officia aut quis sequi enim porro
-          consequatur doloremque optio laboriosam adipisci delectus soluta
-          autem, voluptate vero assumenda eos error.
-        </p>
-      </div>
+            <p className="mt-5">{product?.description}</p>
+          </div>
+        </>
+      )}
     </div>
   );
 };
