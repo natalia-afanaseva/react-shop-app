@@ -5,9 +5,12 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firebaseConfig";
 import { SingleProduct } from "../types/SingleProduct";
 import Loader from "../components/shared/Loader";
+import { useAppDispatch } from "../redux/hooks";
+import { addToCart, decrement, increment } from "../redux/slices/order";
 
 const ProductPage: React.FC = (): JSX.Element => {
   const { productId } = useParams();
+  const dispatch = useAppDispatch();
 
   const [itemsNumber, setItemsNumber] = useState(1);
   const [product, setProduct] = useState<SingleProduct | undefined>(undefined);
@@ -18,11 +21,13 @@ const ProductPage: React.FC = (): JSX.Element => {
       if (prev - 1 < 1) return 1;
       return prev - 1;
     });
-  }, []);
+    dispatch(decrement(productId));
+  }, [dispatch, productId]);
 
   const handlePlus = useCallback(() => {
     setItemsNumber((prev) => prev + 1);
-  }, []);
+    dispatch(increment(productId));
+  }, [dispatch, productId]);
 
   useEffect(() => {
     setLoading(true);
@@ -74,6 +79,14 @@ const ProductPage: React.FC = (): JSX.Element => {
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasRight"
               aria-controls="offcanvasRight"
+              onClick={() =>
+                dispatch(
+                  addToCart({
+                    id: productId,
+                    val: itemsNumber,
+                  })
+                )
+              }
             >
               Add to cart
             </button>

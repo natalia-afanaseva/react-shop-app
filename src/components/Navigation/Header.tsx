@@ -1,12 +1,24 @@
-import React, { memo, useContext } from "react";
+import React, { memo, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Context from "../../Context";
-import { navLinks } from "../../utils/constants";
-import { handleSignIn } from "../../utils/firebaseAuth";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { setLogin, setLogout } from "../../redux/slices/auth";
+// import Context from "../../Context";
+import { signIn } from "../../utils/firebaseAuth";
 
 const Header: React.FC = () => {
   const location = useLocation();
-  const { isAuth } = useContext(Context);
+  // const { isAuth } = useContext(Context);
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+
+  const handleSignIn = useCallback(async () => {
+    const result = await signIn();
+    if (result) {
+      dispatch(setLogin(result));
+    } else {
+      dispatch(setLogout());
+    }
+  }, [dispatch]);
 
   return (
     <header className="navbar navbar-expand-lg px-5">
@@ -16,18 +28,17 @@ const Header: React.FC = () => {
 
       <nav className="collapse navbar-collapse justify-content-end">
         <ul className="navbar-nav">
-          {navLinks.map((navLink) => (
-            <li key={navLink.name} className="nav-item">
-              <Link
-                to={navLink.link}
-                className={`nav-link ${
-                  location.pathname === navLink.link ? "fw-bold" : ""
-                }`}
-              >
-                {navLink.name}
-              </Link>
-            </li>
-          ))}
+          <li className="nav-item">
+            <button
+              className="nav-link"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasRight"
+              aria-controls="offcanvasRight"
+            >
+              Checkout
+            </button>
+          </li>
           {isAuth ? (
             <li className="nav-item">
               <Link
@@ -41,9 +52,9 @@ const Header: React.FC = () => {
             </li>
           ) : (
             <li className="nav-item">
-              <a href="#" className="nav-link" onClick={handleSignIn}>
+              <button className="nav-link" onClick={handleSignIn}>
                 Login
-              </a>
+              </button>
             </li>
           )}
         </ul>

@@ -12,6 +12,19 @@ header {
   &:hover {
     text-decoration: none;
   }
+
+  li button {
+    text-transform: none;
+    background: none;
+    border: 0;
+    letter-spacing: 0;
+
+    &:hover {
+      text-decoration: underline;
+      background: none;
+      border: 0;
+    }
+  }
 }
 
 header a h1,

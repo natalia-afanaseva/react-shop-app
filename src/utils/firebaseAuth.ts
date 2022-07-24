@@ -1,8 +1,8 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
-export const handleSignIn = async () => {
+export const signIn = async () => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
@@ -13,13 +13,18 @@ export const handleSignIn = async () => {
     // The signed-in user info.
     const user = result.user;
 
-    await setDoc(doc(db, "users", user?.uid), {
-      fullName: user?.displayName,
-    });
+    // check if doc exists;
+    const userInCollection = await getDoc(doc(db, `users/${user?.uid}}`));
 
-    return true;
+    if (!userInCollection?.exists()) {
+      await setDoc(doc(db, "users", user?.uid), {
+        fullName: user?.displayName,
+      });
+    }
+
+    return user.uid;
   } catch (error) {
     console.log(error);
-    return false;
+    return null;
   }
 };

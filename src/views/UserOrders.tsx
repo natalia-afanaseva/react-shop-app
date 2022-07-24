@@ -1,23 +1,21 @@
-import React, { memo, useMemo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { useAppSelector } from "../redux/hooks";
 import { db } from "../utils/firebaseConfig";
 import { SingleOrder } from "../types/SingleOrder";
 import Loader from "../components/shared/Loader";
 import UsersOrderWrapper from "../components/Orders/UsersOrderWrapper";
 
 const UserOrders: React.FC = () => {
-  const auth = getAuth();
-
-  const uid = useMemo(() => auth.currentUser?.uid, [auth]);
+  const currentUserUid = useAppSelector((state) => state.auth.currentUserUid);
 
   const [orders, setOrders] = useState<SingleOrder[] | undefined>(undefined);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!uid) return;
+    if (!currentUserUid) return;
     setLoading(true);
-    getDocs(collection(db, "users", uid, "orders"))
+    getDocs(collection(db, "users", currentUserUid, "orders"))
       .then((result) => {
         if (result.empty) return;
         const ord = result.docs.map((doc) => ({
@@ -30,7 +28,7 @@ const UserOrders: React.FC = () => {
         setOrders(ord);
       })
       .finally(() => setLoading(false));
-  }, [uid]);
+  }, [currentUserUid]);
 
   return (
     <div className="row py-5 justify-content-center orders">

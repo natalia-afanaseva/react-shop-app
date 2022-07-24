@@ -11,11 +11,15 @@ const ProductPageCarousel: React.FC<{
       data-bs-ride="carousel"
     >
       <div className="carousel-inner">
-        {photos?.map((photo) => (
-          <div className="carousel-item active">
-            <img src={photo} className="d-block w-100" alt="product" />
-          </div>
-        ))}
+        <div className="carousel-item active">
+          <img src={photos?.[0]} className="d-block w-100" alt="product" />
+        </div>
+        <div className="carousel-item">
+          <img src={photos?.[1]} className="d-block w-100" alt="product" />
+        </div>
+        <div className="carousel-item">
+          <img src={photos?.[2]} className="d-block w-100" alt="product" />
+        </div>
       </div>
       <button
         className="carousel-control-prev"
