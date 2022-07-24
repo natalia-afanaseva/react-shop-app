@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../utils/firebaseConfig";
-import { SingleProduct } from "../types/SingleProduct";
+import { db } from "../../utils/firebaseConfig";
+import { SingleProduct } from "../../types/SingleProduct";
 
 const UsersOrderItem: React.FC<{
   productId?: string;
@@ -42,4 +42,4 @@ const UsersOrderItem: React.FC<{
   );
 };
 
-export default UsersOrderItem;
+export default memo(UsersOrderItem);

@@ -1,8 +1,9 @@
-import React from "react";
-import img from "../assets/cosm2.jpg";
-import img1 from "../assets/cosm1.webp";
+import React, { memo } from "react";
 
-const ProductPageCarousel: React.FC = () => {
+const ProductPageCarousel: React.FC<{
+  photos?: string[];
+}> = ({ photos }) => {
+  // how to manage active in carousel
   return (
     <div
       id="carouselExampleControls"
@@ -10,15 +11,11 @@ const ProductPageCarousel: React.FC = () => {
       data-bs-ride="carousel"
     >
       <div className="carousel-inner">
-        <div className="carousel-item active">
-          <img src={img} className="d-block w-100" alt="first" />
-        </div>
-        <div className="carousel-item">
-          <img src={img1} className="d-block w-100" alt="sec" />
-        </div>
-        <div className="carousel-item">
-          <img src={img} className="d-block w-100" alt="th" />
-        </div>
+        {photos?.map((photo) => (
+          <div className="carousel-item active">
+            <img src={photo} className="d-block w-100" alt="product" />
+          </div>
+        ))}
       </div>
       <button
         className="carousel-control-prev"
@@ -42,4 +39,4 @@ const ProductPageCarousel: React.FC = () => {
   );
 };
 
-export default ProductPageCarousel;
+export default memo(ProductPageCarousel);

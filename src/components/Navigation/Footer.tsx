@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
-import { navLinks } from "../utils/constants";
+import { navLinks } from "../../utils/constants";
 
 const Footer: React.FC = () => {
   return (
@@ -26,4 +26,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

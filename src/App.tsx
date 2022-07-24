@@ -1,12 +1,12 @@
 import React from "react";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
+import Footer from "./components/Navigation/Footer";
+import Header from "./components/Navigation/Header";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./views/MainPage";
 import ProductPage from "./views/ProductPage";
 import Checkout from "./views/Checkout";
 import NotFound from "./views/NotFound";
-import CartOffcanvas from "./components/CartOffcanvas";
+import CartOffcanvas from "./components/Cart/CartOffcanvas";
 import Context from "./Context";
 import { getAuth } from "firebase/auth";
 import UserOrders from "./views/UserOrders";

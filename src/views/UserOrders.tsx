@@ -3,8 +3,8 @@ import { collection, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../utils/firebaseConfig";
 import { SingleOrder } from "../types/SingleOrder";
-import Loader from "../components/Loader";
-import UsersOrderItem from "../components/UsersOrderItem";
+import Loader from "../components/shared/Loader";
+import UsersOrderWrapper from "../components/Orders/UsersOrderWrapper";
 
 const UserOrders: React.FC = () => {
   const auth = getAuth();
@@ -41,24 +41,13 @@ const UserOrders: React.FC = () => {
         ) : (
           <>
             {orders?.map((order) => (
-              <div key={order.id} className="order">
-                {Object.entries(order.products).map(
-                  ([productId, itemsNumber]) => (
-                    <UsersOrderItem
-                      key={productId}
-                      productId={productId}
-                      number={itemsNumber}
-                    />
-                  )
-                )}
-                <h6>Total: ${order.totalSum}</h6>
-                <p>Status: {order.status}</p>
-                <button>
-                  {order.status === "pending"
-                    ? "Confirm delivery"
-                    : "Completed"}
-                </button>
-              </div>
+              <UsersOrderWrapper
+                id={order.id}
+                created={order.created}
+                products={order.products}
+                status={order.status}
+                totalSum={order.totalSum}
+              />
             ))}
           </>
         )}

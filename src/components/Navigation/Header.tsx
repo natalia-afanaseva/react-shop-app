@@ -1,8 +1,8 @@
 import React, { memo, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Context from "../Context";
-import { navLinks } from "../utils/constants";
-import { handleSignIn } from "../utils/firebaseAuth";
+import Context from "../../Context";
+import { navLinks } from "../../utils/constants";
+import { handleSignIn } from "../../utils/firebaseAuth";
 
 const Header: React.FC = () => {
   const location = useLocation();

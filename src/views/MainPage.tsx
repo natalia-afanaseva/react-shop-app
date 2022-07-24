@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import hero from "../assets/cosm1.webp";
-import SingleProductCard from "../components/SingleProductCard";
+import SingleProductCard from "../components/MainPage/SingleProductCard";
 import { db } from "../utils/firebaseConfig";
 import {
   collection,
@@ -8,7 +8,7 @@ import {
   onSnapshot,
   DocumentData,
 } from "firebase/firestore";
-import Loader from "../components/Loader";
+import Loader from "../components/shared/Loader";
 
 const MainPage = (): JSX.Element => {
   const [products, setProducts] = useState<
@@ -67,4 +67,4 @@ const MainPage = (): JSX.Element => {
   );
 };
 
-export default MainPage;
+export default memo(MainPage);

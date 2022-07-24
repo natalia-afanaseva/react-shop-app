@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import CartItem from "./CartItem";
 
 const CartOffcanvas: React.FC = () => {
@@ -30,4 +30,4 @@ const CartOffcanvas: React.FC = () => {
   );
 };
 
-export default CartOffcanvas;
+export default memo(CartOffcanvas);

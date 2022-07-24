@@ -1,10 +1,10 @@
 import React, { memo, useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ProductPageCarousel from "../components/ProductPageCarousel";
+import ProductPageCarousel from "../components/SingleProductPage/ProductPageCarousel";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firebaseConfig";
 import { SingleProduct } from "../types/SingleProduct";
-import Loader from "../components/Loader";
+import Loader from "../components/shared/Loader";
 
 const ProductPage: React.FC = (): JSX.Element => {
   const { productId } = useParams();
@@ -52,7 +52,7 @@ const ProductPage: React.FC = (): JSX.Element => {
         <Loader />
       ) : (
         <>
-          <ProductPageCarousel />
+          <ProductPageCarousel photos={product?.photo} />
 
           <div className="col">
             <h2>{product?.name}</h2>

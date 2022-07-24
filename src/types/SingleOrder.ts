@@ -1,6 +1,8 @@
+import { Timestamp } from "firebase/firestore";
+
 export type SingleOrder = {
   id: string;
-  created: Date;
+  created: Timestamp;
   products: {
     [key: string]: number;
   };
