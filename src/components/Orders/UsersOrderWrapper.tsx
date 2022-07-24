@@ -1,5 +1,5 @@
 import React, { memo, useMemo, useCallback, useState } from "react";
-import { SingleOrder } from "../../types/SingleOrder";
+import { SingleOrder } from "../../types/data";
 import UsersOrderItem from "./UsersOrderItem";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../utils/firebaseConfig";

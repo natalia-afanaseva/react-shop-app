@@ -1,5 +1,7 @@
 import React, { useState, memo } from "react";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import { addToCart } from "../../redux/slices/order";
 
 const SingleProductCard: React.FC<{
   id?: string;
@@ -10,6 +12,8 @@ const SingleProductCard: React.FC<{
   name?: string;
 }> = ({ id, imageMain, imageFallback, price, effect, name }) => {
   const [toggleImage, setToggleImage] = useState(imageMain);
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className="product-card col-12 col-md-6 col-lg-4 col-xl-3">
@@ -25,8 +29,22 @@ const SingleProductCard: React.FC<{
         <h5>{name}</h5>
         <h6>{effect}</h6>
         <p>${price}</p>
-        <div>stars</div>
-        <button type="button">Add to cart</button>
+        <button
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+          onClick={() =>
+            dispatch(
+              addToCart({
+                id,
+                val: 1,
+              })
+            )
+          }
+        >
+          Add to cart
+        </button>
       </div>
     </div>
   );

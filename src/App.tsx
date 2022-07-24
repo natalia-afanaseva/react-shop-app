@@ -16,7 +16,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <CartOffcanvas />
       <Header />
-      <main>
+      <main className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/product/:productId" element={<ProductPage />} />

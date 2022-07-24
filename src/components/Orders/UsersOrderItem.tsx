@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../utils/firebaseConfig";
-import { SingleProduct } from "../../types/SingleProduct";
+import { SingleProduct } from "../../types/data";
 
 const UsersOrderItem: React.FC<{
   productId?: string;
@@ -29,7 +29,7 @@ const UsersOrderItem: React.FC<{
   }, [productId]);
 
   return (
-    <div className="row">
+    <div className="row mb-5">
       <div className="col">
         <img alt={product?.name} src={product?.photo[0]} />
       </div>

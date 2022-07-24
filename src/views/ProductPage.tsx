@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import ProductPageCarousel from "../components/SingleProductPage/ProductPageCarousel";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firebaseConfig";
-import { SingleProduct } from "../types/SingleProduct";
+import { SingleProduct } from "../types/data";
 import Loader from "../components/shared/Loader";
 import { useAppDispatch } from "../redux/hooks";
 import { addToCart, decrement, increment } from "../redux/slices/order";

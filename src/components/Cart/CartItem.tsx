@@ -3,7 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../utils/firebaseConfig";
 import { useAppDispatch } from "../../redux/hooks";
 import { decrement, removeFromCart, increment } from "../../redux/slices/order";
-import { SingleProduct } from "../../types/SingleProduct";
+import { SingleProduct } from "../../types/data";
 
 const CartItem: React.FC<{
   productId: string;

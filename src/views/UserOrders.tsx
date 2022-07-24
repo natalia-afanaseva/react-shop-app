@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { useAppSelector } from "../redux/hooks";
 import { db } from "../utils/firebaseConfig";
-import { SingleOrder } from "../types/SingleOrder";
+import { SingleOrder } from "../types/data";
 import Loader from "../components/shared/Loader";
 import UsersOrderWrapper from "../components/Orders/UsersOrderWrapper";
 
