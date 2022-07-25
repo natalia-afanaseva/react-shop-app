@@ -1,10 +1,9 @@
 import React, { memo, useMemo, useCallback, useState } from "react";
 import { SingleOrder } from "../../types/data";
 import UsersOrderItem from "./UsersOrderItem";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../utils/firebaseConfig";
 import { useAppSelector } from "../../redux/hooks";
 import { months } from "../../utils/constants";
+import { setDocWithId } from "../../service/generalRequests";
 
 const UsersOrderWrapper: React.FC<SingleOrder> = ({
   products,
@@ -32,13 +31,10 @@ const UsersOrderWrapper: React.FC<SingleOrder> = ({
 
     setOrderStatus("completed");
 
-    await setDoc(
-      doc(db, `users/${currentUserUid}/orders/${id}`),
-      {
-        status: "completed",
-      },
-      { merge: true }
-    );
+    await setDocWithId(`users/${currentUserUid}/orders/${id}`, {
+      status: "completed",
+    });
+
     setLoading(false);
   }, [status, currentUserUid, id]);
 

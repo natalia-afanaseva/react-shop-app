@@ -2,15 +2,16 @@ import React, { useState, memo } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { addToCart } from "../../redux/slices/order";
+import { SingleProductCardProps } from "../../types/mainPage";
 
-const SingleProductCard: React.FC<{
-  id?: string;
-  imageMain?: string;
-  imageFallback?: string;
-  price?: string;
-  effect?: string;
-  name?: string;
-}> = ({ id, imageMain, imageFallback, price, effect, name }) => {
+const SingleProductCard: React.FC<SingleProductCardProps> = ({
+  id,
+  imageMain,
+  imageFallback,
+  price,
+  effect,
+  name,
+}) => {
   const [toggleImage, setToggleImage] = useState(imageMain);
 
   const dispatch = useAppDispatch();

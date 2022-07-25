@@ -1,10 +1,9 @@
 import React, { memo, useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
 import { useAppSelector } from "../redux/hooks";
-import { db } from "../utils/firebaseConfig";
 import { SingleOrder } from "../types/data";
 import Loader from "../components/shared/Loader";
 import UsersOrderWrapper from "../components/Orders/UsersOrderWrapper";
+import { getAllDocs } from "../service/generalRequests";
 
 const UserOrders: React.FC = () => {
   const currentUserUid = useAppSelector((state) => state.auth.currentUserUid);
@@ -15,10 +14,11 @@ const UserOrders: React.FC = () => {
   useEffect(() => {
     if (!currentUserUid) return;
     setLoading(true);
-    getDocs(collection(db, "users", currentUserUid, "orders"))
+
+    getAllDocs("users", currentUserUid, "orders")
       .then((result) => {
-        if (result.empty) return;
-        const ord = result.docs.map((doc) => ({
+        if (!result) return;
+        const ord = result.map((doc: any) => ({
           id: doc.id,
           created: doc.data().created,
           products: doc.data().products,
@@ -45,6 +45,7 @@ const UserOrders: React.FC = () => {
                 products={order.products}
                 status={order.status}
                 totalSum={order.totalSum}
+                key={order.id}
               />
             ))}
           </>

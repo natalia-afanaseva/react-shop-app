@@ -2,12 +2,10 @@ import React, { memo, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { setLogin, setLogout } from "../../redux/slices/auth";
-// import Context from "../../Context";
 import { signIn } from "../../utils/firebaseAuth";
 
 const Header: React.FC = () => {
   const location = useLocation();
-  // const { isAuth } = useContext(Context);
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector((state) => state.auth.isAuth);
 

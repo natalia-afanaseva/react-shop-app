@@ -1,27 +1,24 @@
 import React, { useState, useEffect, memo } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../utils/firebaseConfig";
 import { SingleProduct } from "../../types/data";
+import { getDocById } from "../../service/generalRequests";
+import { UsersOrderItemProps } from "../../types/orders";
 
-const UsersOrderItem: React.FC<{
-  productId?: string;
-  number?: number;
-}> = ({ productId, number }) => {
+const UsersOrderItem: React.FC<UsersOrderItemProps> = ({
+  productId,
+  number,
+}) => {
   const [product, setProduct] = useState<SingleProduct | undefined>(undefined);
 
   useEffect(() => {
-    getDoc(doc(db, `products/${productId}`)).then((result) => {
-      if (!result.exists) {
-        return;
-      }
-
+    getDocById("products", productId).then((result: any) => {
+      if (!result) return;
       const prod = {
         id: result.id,
-        description: result.data()?.description,
-        effect: result.data()?.effect,
-        name: result.data()?.name,
-        photo: result.data()?.photo,
-        price: result.data()?.price,
+        description: result.data().description,
+        effect: result.data().effect,
+        name: result.data().name,
+        photo: result.data().photo,
+        price: result.data().price,
       };
 
       setProduct(prod);

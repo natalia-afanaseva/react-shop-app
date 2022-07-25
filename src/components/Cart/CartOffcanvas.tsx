@@ -1,16 +1,10 @@
 import React, { memo, useState, useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import CartItem from "./CartItem";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  getDoc,
-  doc,
-} from "firebase/firestore";
-import { db } from "../../utils/firebaseConfig";
+import { serverTimestamp } from "firebase/firestore";
 import { emptyCart } from "../../redux/slices/order";
 import BaseModal from "../shared/BaseModal";
+import { addDocWithAutoId, getDocById } from "../../service/generalRequests";
 
 const CartOffcanvas: React.FC = () => {
   const totalItemsNumber = useAppSelector(
@@ -35,12 +29,12 @@ const CartOffcanvas: React.FC = () => {
   useEffect(() => {
     setTotalSum(0);
     Object.entries(products).forEach(([productId, number]) => {
-      getDoc(doc(db, `products/${productId}`)).then((doc) =>
+      getDocById("products", productId).then((doc: any) => {
         setTotalSum((prev) => {
-          prev += doc.data()?.price * number ?? 0;
+          prev += doc.data().price * number ?? 0;
           return prev;
-        })
-      );
+        });
+      });
     });
   }, [products]);
 
@@ -54,12 +48,22 @@ const CartOffcanvas: React.FC = () => {
     }
     setLoading(true);
 
-    await addDoc(collection(db, `users/${currentUserUid}/orders`), {
+    const result = await addDocWithAutoId(`users/${currentUserUid}/orders`, {
       status: "pending",
       products,
       created: serverTimestamp(),
       totalSum,
     });
+
+    if (!result) {
+      setOpenModal({
+        visible: true,
+        text: "Something went wrong.",
+      });
+      setLoading(false);
+      return;
+    }
+
     setLoading(false);
     dispatch(emptyCart());
 

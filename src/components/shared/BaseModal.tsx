@@ -1,11 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import Modal from "react-bootstrap/Modal";
+import { BaseModalProps } from "../../types/modal";
 
-const BaseModal: React.FC<{
-  show: boolean;
-  onHide: () => void;
-  text: string;
-}> = ({ show, onHide, text }) => {
+const BaseModal: React.FC<BaseModalProps> = ({ show, onHide, text }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton />
@@ -17,4 +14,4 @@ const BaseModal: React.FC<{
   );
 };
 
-export default BaseModal;
+export default memo(BaseModal);

@@ -1,12 +1,11 @@
 import React, { memo, useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProductPageCarousel from "../components/SingleProductPage/ProductPageCarousel";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../utils/firebaseConfig";
 import { SingleProduct } from "../types/data";
 import Loader from "../components/shared/Loader";
 import { useAppDispatch } from "../redux/hooks";
 import { addToCart, decrement, increment } from "../redux/slices/order";
+import { getDocById } from "../service/generalRequests";
 
 const ProductPage: React.FC = (): JSX.Element => {
   const { productId } = useParams();
@@ -31,11 +30,10 @@ const ProductPage: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     setLoading(true);
-    getDoc(doc(db, `products/${productId}`))
+
+    getDocById("products", productId)
       .then((result) => {
-        if (!result.exists) {
-          return;
-        }
+        if (!result) return;
 
         const prod = {
           id: result.id,

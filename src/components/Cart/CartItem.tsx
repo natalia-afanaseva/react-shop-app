@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../utils/firebaseConfig";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { decrement, removeFromCart, increment } from "../../redux/slices/order";
 import { SingleProduct } from "../../types/data";
+import { getDocById } from "../../service/generalRequests";
+import { CartItemProps } from "../../types/cart";
 
-const CartItem: React.FC<{
-  productId: string;
-  number: number;
-  setTotalSum: React.Dispatch<React.SetStateAction<number>>;
-}> = ({ productId, number, setTotalSum }) => {
+const CartItem: React.FC<CartItemProps> = ({
+  productId,
+  number,
+  setTotalSum,
+}) => {
   const dispatch = useAppDispatch();
 
   const [product, setProduct] = useState<SingleProduct | undefined>(undefined);
@@ -29,18 +29,14 @@ const CartItem: React.FC<{
   }, [dispatch, productId]);
 
   useEffect(() => {
-    getDoc(doc(db, `products/${productId}`)).then((result) => {
-      if (!result.exists) {
-        return;
-      }
-
+    getDocById("products", productId).then((result: any) => {
       const prod = {
         id: result.id,
-        description: result.data()?.description,
-        effect: result.data()?.effect,
-        name: result.data()?.name,
-        photo: result.data()?.photo,
-        price: result.data()?.price,
+        description: result.data().description,
+        effect: result.data().effect,
+        name: result.data().name,
+        photo: result.data().photo,
+        price: result.data().price,
       };
 
       setProduct(prod);
@@ -75,4 +71,4 @@ const CartItem: React.FC<{
   );
 };
 
-export default CartItem;
+export default memo(CartItem);

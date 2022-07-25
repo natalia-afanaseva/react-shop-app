@@ -1,33 +1,21 @@
 import React, { useEffect, useState, memo } from "react";
 import hero from "../assets/cosm1.webp";
 import SingleProductCard from "../components/MainPage/SingleProductCard";
-import { db } from "../utils/firebaseConfig";
-import {
-  collection,
-  query,
-  onSnapshot,
-  DocumentData,
-} from "firebase/firestore";
 import Loader from "../components/shared/Loader";
+import { getAllDocs } from "../service/generalRequests";
 
-const MainPage = (): JSX.Element => {
-  const [products, setProducts] = useState<
-    { id: string; data: DocumentData }[]
-  >([]);
+const MainPage: React.FC = (): JSX.Element => {
+  const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    const q = query(collection(db, "products"));
-    onSnapshot(q, (querySnapshot) => {
-      setProducts(
-        querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      );
-      setLoading(false);
-    });
+
+    getAllDocs("products")
+      .then((result) => {
+        setProducts(result);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   return (
@@ -53,10 +41,10 @@ const MainPage = (): JSX.Element => {
             {products.map((product) => (
               <SingleProductCard
                 key={product.id}
-                imageMain={product.data.photo[0]}
-                imageFallback={product.data.photo[1]}
-                name={product.data.name}
-                price={product.data.price}
+                imageMain={product.data().photo[0]}
+                imageFallback={product.data().photo[1]}
+                name={product.data().name}
+                price={product.data().price}
                 id={product.id}
               />
             ))}

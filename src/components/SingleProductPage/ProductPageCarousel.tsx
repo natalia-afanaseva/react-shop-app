@@ -1,9 +1,9 @@
 import React, { memo } from "react";
+import { ProductPageCarouselProps } from "../../types/singleProduct";
 
-const ProductPageCarousel: React.FC<{
-  photos?: string[];
-}> = ({ photos }) => {
-  // how to manage active in carousel
+const ProductPageCarousel: React.FC<ProductPageCarouselProps> = ({
+  photos,
+}) => {
   return (
     <div
       id="carouselExampleControls"

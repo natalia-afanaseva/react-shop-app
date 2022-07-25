@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import img from "../assets/cosm1.webp";
 
 const NotFound: React.FC = () => {
@@ -10,4 +10,4 @@ const NotFound: React.FC = () => {
   );
 };
 
-export default NotFound;
+export default memo(NotFound);
