@@ -7,7 +7,7 @@ const ProductPageCarousel: React.FC<ProductPageCarouselProps> = ({
   return (
     <div
       id="carouselExampleControls"
-      className="carousel slide"
+      className="carousel slide mb-5 mb-lg-0"
       data-bs-ride="carousel"
     >
       <div className="carousel-inner">

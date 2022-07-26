@@ -27,10 +27,10 @@ const UsersOrderItem: React.FC<UsersOrderItemProps> = ({
 
   return (
     <div className="row mb-5">
-      <div className="col">
+      <div className="col-12 col-md-6 mb-3 mb-md-0">
         <img alt={product?.name} src={product?.photo[0]} />
       </div>
-      <div className="col">
+      <div className="col-12 col-md-6">
         <h5>
           {product?.name} <span>x {number}</span>
         </h5>

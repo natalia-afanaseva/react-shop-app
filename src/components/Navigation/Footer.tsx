@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
-import { navLinks } from "../../utils/constants";
 
 const Footer: React.FC = () => {
   return (
@@ -9,19 +8,9 @@ const Footer: React.FC = () => {
         <h1>Cosmetique</h1>
       </Link>
 
-      <nav className="collapse navbar-collapse justify-content-end">
-        {
-          <ul className="navbar-nav">
-            {navLinks.map((navLink) => (
-              <li key={navLink.name} className="nav-item">
-                <Link to={navLink.link} className="nav-link text-white">
-                  {navLink.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        }
-      </nav>
+      <address className="collapse navbar-collapse justify-content-end">
+        Natalia Afanaseva (c) 2022
+      </address>
     </footer>
   );
 };

@@ -41,7 +41,8 @@ const UsersOrderWrapper: React.FC<SingleOrder> = ({
   return (
     <div className="order">
       <h6>
-        Order #{id}, created on {creationDate}
+        Order #{id}, created on{" "}
+        <time dateTime={created.toDate().toDateString()}>{creationDate}</time>
       </h6>
       {Object.entries(products).map(([productId, itemsNumber]) => (
         <UsersOrderItem
