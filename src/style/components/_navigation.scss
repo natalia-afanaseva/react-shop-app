@@ -2,11 +2,18 @@
 
 header {
   background-color: colors.$pink;
-  min-height: 6.875rem;
   border-bottom: 1px solid colors.$white;
   position: sticky !important;
   top: 0;
   z-index: 100;
+
+  nav.navbar {
+    background-color: colors.$pink !important;
+
+    button.navbar-toggler {
+      background-color: transparent;
+    }
+  }
 
   a,
   &:hover {
