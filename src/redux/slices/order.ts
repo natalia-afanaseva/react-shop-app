@@ -64,11 +64,6 @@ export const orderSlice = createSlice({
       action: PayloadAction<{ id: string | undefined; val: number }>
     ) => {
       if (!action.payload.id) return;
-      //   if (state.products[action.payload.id]) {
-      //     state.products[action.payload.id] += action.payload.val;
-      //   } else {
-      //     state.products[action.payload.id] = action.payload.val;
-      //   }
       state.products[action.payload.id] = action.payload.val;
 
       if (state.isEmpty) {

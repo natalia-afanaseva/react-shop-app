@@ -20,13 +20,29 @@ const CartItem: React.FC<CartItemProps> = ({
       if (prev - 1 < 1) return 1;
       return prev - 1;
     });
+    setTotalSum((prev) => {
+      if (product) {
+        if (prev - product.price > 0) {
+          return prev - product?.price;
+        } else {
+          return 0;
+        }
+      }
+      return prev;
+    });
     dispatch(decrement(productId));
-  }, [dispatch, productId]);
+  }, [dispatch, productId, setTotalSum, product]);
 
   const handlePlus = useCallback(() => {
     setItemsNumber((prev) => prev + 1);
+    setTotalSum((prev) => {
+      if (product) {
+        return prev + product?.price;
+      }
+      return prev;
+    });
     dispatch(increment(productId));
-  }, [dispatch, productId]);
+  }, [dispatch, productId, setTotalSum, product]);
 
   useEffect(() => {
     getDocById("products", productId).then((result: any) => {
@@ -38,10 +54,10 @@ const CartItem: React.FC<CartItemProps> = ({
         photo: result.data().photo,
         price: result.data().price,
       };
-
+      setItemsNumber(() => number);
       setProduct(prod);
     });
-  }, [productId, number, setTotalSum]);
+  }, [productId, number]);
 
   return (
     <div className="row cart">
@@ -50,7 +66,7 @@ const CartItem: React.FC<CartItemProps> = ({
       </div>
       <div className="col d-flex flex-column justify-content-between">
         <p>
-          {product?.name} <span>x {number}</span>
+          {product?.name} <span>x {itemsNumber}</span>
         </p>
 
         <div className="d-flex align-items-center justify-content-between mb-3">
