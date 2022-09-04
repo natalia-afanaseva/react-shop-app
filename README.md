@@ -7,7 +7,7 @@
 
 ## General info
 
-An app for purchasing cosmetics products with authorisation. One can add products to the cart, proceed to checkout and check the order history. You can visit the website ... to check how it works.
+An app for purchasing cosmetics products with mock authorisation. One can add products to the cart, proceed to checkout and check the order history.
 
 ## Technologies
 
@@ -23,7 +23,7 @@ An app for purchasing cosmetics products with authorisation. One can add product
 To run this project, install it locally using npm:
 
 ```
-$ cd ../shop-app
+$ cd shop-app
 $ npm install
 $ npm start
 ```

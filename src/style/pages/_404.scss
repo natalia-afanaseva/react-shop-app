@@ -1,24 +1,11 @@
-@use "../colors.scss" as colors;
+@use "../colors" as colors;
+@use "../media" as media;
 
 .not-found {
   padding: 3rem;
   position: relative;
-  background: linear-gradient(120deg, colors.$white, colors.$pink);
-
-  img {
-    width: 100%;
-    max-height: 65vh;
-    object-fit: cover;
-    box-shadow: 1px 1px 10px colors.$pink;
-  }
 
   h1 {
-    position: absolute;
-    top: 45%;
-    left: 45%;
-    color: white;
-    font-size: 5rem;
-    text-shadow: -1px 0 colors.$dark-pink, 0 1px colors.$dark-pink,
-      1px 0 colors.$dark-pink, 0 -1px colors.$dark-pink;
+    font-size: 3.5rem;
   }
 }

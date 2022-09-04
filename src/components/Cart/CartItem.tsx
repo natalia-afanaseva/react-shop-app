@@ -61,10 +61,10 @@ const CartItem: React.FC<CartItemProps> = ({
 
   return (
     <div className="row cart">
-      <div className="col">
+      <div className="col col-12 col-md-6">
         <img src={product?.photo[0]} alt={product?.name} />
       </div>
-      <div className="col d-flex flex-column justify-content-between">
+      <div className="col col-12 col-md-6 d-flex flex-column justify-content-between">
         <p>
           {product?.name} <span>x {itemsNumber}</span>
         </p>
